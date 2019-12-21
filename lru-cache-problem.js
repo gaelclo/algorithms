@@ -44,6 +44,18 @@ class LruCache {
     }
   }
 
+  get(data) {
+    if(this.caches.has(data)) {
+      let node = this.caches.get(data);
+      
+      node.prev.next = node.next;
+      node.next.prev = node.prev;
+      node.next = null;
+      node.prev = this.entries.head;
+      this.entries.head = node;      
+    }
+  }
+
   show() {
     let output = "";
     let current = this.entries.head;
@@ -67,6 +79,10 @@ cache.add(79);
 cache.add(8);
 cache.add(9);
 cache.add(18);
-
 cache.show();
+cache.get(79);
+cache.show();
+cache.add(24);
+cache.show();
+
 
